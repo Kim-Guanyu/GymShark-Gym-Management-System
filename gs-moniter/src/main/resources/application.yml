@@ -1,0 +1,9 @@
+server:
+  port: 13411 # 端口号
+spring:
+  application:
+    name: springboot-admin # 项目名称
+  security:
+    user:
+      name: admin # SpringBootAdmin账号
+      password: admin # SpringBootAdmin密码
