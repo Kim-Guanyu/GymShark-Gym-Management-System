@@ -1,0 +1,58 @@
+server:
+  port: 14108
+spring:
+  # 数据源配置
+  datasource:
+    url: jdbc:mysql://192.168.211.132:3306/gymshark?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  # Redis 配置 - 修复后
+  data:
+    redis:
+      host: 192.168.211.132
+      port: 6379
+      password: 123456
+      timeout: 2000ms  # 可选：设置连接超时时间
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+  # Elasticsearch 配置
+  elasticsearch:
+    uris: http://192.168.211.132:9200
+    connection-timeout: 5000ms
+    socket-timeout: 30000ms
+  # Spring Boot Admin 客户端配置
+  boot:
+    admin:
+      client:
+        instance:
+          service-base-url: http://localhost:8848
+        url: http://localhost:13411
+        username: admin
+        password: admin
+# MyBatis-Plus 核心配置
+mybatis-plus:
+  type-aliases-package: com.mdkj.domain
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 补充mapper文件路径（如果有XML文件需配置）
+  mapper-locations: classpath:mapper/**/*.xml
+# MinIO 配置
+minio:
+  endpoint: http://192.168.211.132:9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucket-name: gymshark  # 补充默认桶名（根据实际业务调整）
+
+# 日志配置（便于排查ES连接问题）
+logging:
+  level:
+    org.elasticsearch.client: DEBUG
+    org.springframework.data.elasticsearch: DEBUG
